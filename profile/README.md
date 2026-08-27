@@ -24,7 +24,7 @@ Consulte o [guia de contribuição](../CONTRIBUTING.md) e as [convenções da or
 ## Tecnologias do MVP
 
 - Frontend: React
-- Backend: Spring Boot
+- Backend: Node
 - Banco de dados: PostgreSQL
 - Ambientes locais: Docker
 
