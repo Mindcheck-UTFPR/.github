@@ -19,7 +19,7 @@ O **Mindcheck** é uma plataforma de autoavaliação que organiza instrumentos e
 - Toda mudança deve estar associada a uma issue e passar por Pull Request.
 - Não são permitidos commits diretos em `main` ou `develop`.
 
-Consulte o [guia de contribuição](../CONTRIBUTING.md) e as [convenções da organização](../docs/CONVENTIONS.md) antes de iniciar uma tarefa.
+Consulte o [guia de contribuição](../CONTRIBUTING.md), as [convenções técnicas](../docs/CONVENTIONS.md) e a [governança do projeto](../docs/GOVERNANCE.md) antes de iniciar uma tarefa.
 
 ## Tecnologias do MVP
 
