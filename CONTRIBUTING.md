@@ -27,5 +27,8 @@
 - Pipeline aprovado e pelo menos uma revisão.
 - Evidências visuais anexadas para mudanças de interface.
 
-As regras completas estão em [docs/CONVENTIONS.md](docs/CONVENTIONS.md).
+Consulte também:
+
+- [Convenções técnicas](docs/CONVENTIONS.md): branches, commits e Pull Requests;
+- [Governança do projeto](docs/GOVERNANCE.md): DoR, DoD, prioridades, labels e evidências.
 
