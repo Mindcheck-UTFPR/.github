@@ -30,7 +30,3 @@ Consulte o [guia de contribuição](../CONTRIBUTING.md), as [convenções técni
 - PostgreSQL;
 - Docker Compose e Nginx;
 - VM gratuita da Oracle Cloud para demonstração.
-
-## Equipe
-
-O projeto é desenvolvido por estudantes, de forma colaborativa. A arquitetura e o deploy devem ser simples o bastante para o grupo entender, apresentar e manter.
