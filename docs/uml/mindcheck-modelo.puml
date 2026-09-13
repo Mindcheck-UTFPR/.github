@@ -1,0 +1,172 @@
+@startuml Mindcheck_Modelo
+title Mindcheck — Modelo de dados do MVP (só FK reais)
+
+left to right direction
+hide circle
+hide methods
+skinparam shadowing false
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam entity {
+  BackgroundColor #FEFEFE
+  BorderColor #333333
+}
+
+legend left
+  Cardinalidade (pé-de-galinha)
+  1 : 1   =  ||--||
+  1 : N   =  ||--o{
+  N : 1   =  }o--||
+  0..1    =  o|  (opcional)
+  N : N   =  }o--o{   **não existe neste MVP**
+  Enum é tipo de coluna, **não** tabela — por isso não tem linha.
+endlegend
+
+entity usuario {
+  * **id** : INTEGER <<PK>>
+  --
+  * nome : VARCHAR(120)
+  * email : VARCHAR(255) UNIQUE
+  * senha_hash : VARCHAR(255)
+  * termos_aceitos_em : TIMESTAMPTZ
+  * termos_versao : VARCHAR(20)
+  * criado_em : TIMESTAMPTZ
+}
+
+entity sessao {
+  * **id** : INTEGER <<PK>>
+  --
+  * **usuario_id** : INTEGER <<FK>>
+  * refresh_token_hash : VARCHAR(64) UNIQUE
+  * expira_em : TIMESTAMPTZ
+  * criado_em : TIMESTAMPTZ
+}
+
+entity checkin_diario {
+  * **id** : INTEGER <<PK>>
+  --
+  * **usuario_id** : INTEGER <<FK>>
+  * data : DATE
+  * humor : humor_nivel
+  * intensidade : SMALLINT
+  sono_horas : NUMERIC(3,1)
+  estudou : BOOLEAN
+  atividade_fisica : BOOLEAN
+  relacoes : SMALLINT
+  eventos : VARCHAR(280)
+  * criado_em : TIMESTAMPTZ
+  editado_em : TIMESTAMPTZ
+  --
+  UNIQUE (usuario_id, data)
+}
+
+entity questionario {
+  * **id** : INTEGER <<PK>>
+  --
+  * nome : VARCHAR(80) UNIQUE
+  descricao : TEXT
+  * ordem : SMALLINT
+  * ativo : BOOLEAN
+}
+
+entity questionario_versao {
+  * **id** : INTEGER <<PK>>
+  --
+  * **questionario_id** : INTEGER <<FK>>
+  * versao : VARCHAR(20)
+  * ativa : BOOLEAN
+  * periodo_reaplicacao_dias : SMALLINT
+  * criado_em : TIMESTAMPTZ
+  --
+  UNIQUE (questionario_id, versao)
+}
+
+entity pergunta {
+  * **id** : INTEGER <<PK>>
+  --
+  * **versao_id** : INTEGER <<FK>>
+  * texto : TEXT
+  * tipo : pergunta_tipo
+  * ordem : SMALLINT
+  * obrigatoria : BOOLEAN
+}
+
+entity opcao_pergunta {
+  * **id** : INTEGER <<PK>>
+  --
+  * **pergunta_id** : INTEGER <<FK>>
+  * texto : VARCHAR(200)
+  * valor_numerico : SMALLINT
+  * ordem : SMALLINT
+}
+
+entity faixa_interpretacao {
+  * **id** : INTEGER <<PK>>
+  --
+  * **versao_id** : INTEGER <<FK>>
+  * minimo : SMALLINT
+  * maximo : SMALLINT
+  * codigo : VARCHAR(40)
+  * rotulo : VARCHAR(80)
+  * texto_orientativo : TEXT
+}
+
+entity avaliacao {
+  * **id** : INTEGER <<PK>>
+  --
+  * **usuario_id** : INTEGER <<FK>>
+  * **versao_id** : INTEGER <<FK>>
+  * criado_em : TIMESTAMPTZ
+}
+
+entity resposta {
+  * **id** : INTEGER <<PK>>
+  --
+  * **avaliacao_id** : INTEGER <<FK>>
+  * **pergunta_id** : INTEGER <<FK>>
+  opcao_id : INTEGER <<FK>>
+  texto : TEXT
+  --
+  UNIQUE (avaliacao_id, pergunta_id)
+}
+
+entity resultado {
+  * **id** : INTEGER <<PK>>
+  --
+  * **avaliacao_id** : INTEGER <<FK>> UNIQUE
+  * pontuacao : SMALLINT
+  * **faixa_id** : INTEGER <<FK>>
+  * calculado_em : TIMESTAMPTZ
+}
+
+' --- Relacionamentos: só coluna FK → PK ---
+
+usuario        ||--o{  sessao              : "1 : N"
+usuario        ||--o{  checkin_diario      : "1 : N"
+usuario        ||--o{  avaliacao           : "1 : N"
+
+questionario        ||--o{  questionario_versao : "1 : N"
+questionario_versao ||--o{  pergunta            : "1 : N"
+questionario_versao ||--o{  faixa_interpretacao : "1 : N"
+questionario_versao ||--o{  avaliacao           : "1 : N"
+
+pergunta  ||--o{  opcao_pergunta : "1 : N\n(0 se aberta)"
+pergunta  ||--o{  resposta       : "1 : N"
+
+avaliacao ||--o{  resposta  : "1 : N"
+avaliacao ||--||  resultado : "1 : 1"
+
+opcao_pergunta      |o--o{  resposta : "0..1 : N"
+faixa_interpretacao ||--o{  resultado : "1 : N"
+
+note bottom of avaliacao
+  Pacote de respostas de uma aplicação.
+  O robô soma na hora e grava resultado.
+  **Não é diagnóstico.**
+end note
+
+note bottom of checkin_diario
+  Sem FK para questionario/pergunta.
+end note
+
+@enduml

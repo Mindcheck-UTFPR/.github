@@ -1,0 +1,160 @@
+// Cole em https://dbdiagram.io/d
+// <  1:N    >  N:1    -  1:1
+
+Enum humor_nivel {
+  muito_baixo
+  baixo
+  neutro
+  bom
+  muito_bom
+}
+
+Enum pergunta_tipo {
+  escala
+  polar
+  escolha_unica
+  aberta
+}
+
+Table usuario {
+  id integer [pk, increment]
+  nome varchar(120) [not null]
+  email varchar(255) [unique, not null]
+  senha_hash varchar(255) [not null]
+  termos_aceitos_em timestamptz [not null]
+  termos_versao varchar(20) [not null]
+  criado_em timestamptz [not null, default: `now()`]
+}
+
+Table sessao {
+  id integer [pk, increment]
+  usuario_id integer [not null]
+  refresh_token_hash varchar(64) [unique, not null]
+  expira_em timestamptz [not null]
+  criado_em timestamptz [not null, default: `now()`]
+}
+
+Table checkin_diario {
+  id integer [pk, increment]
+  usuario_id integer [not null]
+  data date [not null]
+  humor humor_nivel [not null]
+  intensidade smallint [not null, note: 'CHECK 1-5']
+  sono_horas decimal [note: 'CHECK 0-24']
+  estudou boolean
+  atividade_fisica boolean
+  relacoes smallint [note: 'CHECK 1-5']
+  eventos varchar(280)
+  criado_em timestamptz [not null]
+  editado_em timestamptz
+
+  indexes {
+    (usuario_id, data) [unique]
+  }
+}
+
+Table questionario {
+  id integer [pk, increment]
+  nome varchar(80) [unique, not null, note: 'Ex.: PHQ-9']
+  descricao text
+  ordem smallint [not null]
+  ativo boolean [not null, note: 'Se aparece na lista do app']
+}
+
+Table questionario_versao {
+  id integer [pk, increment]
+  questionario_id integer [not null]
+  versao varchar(20) [not null, note: 'Versao do questionario, nao do app']
+  ativa boolean [not null, note: 'No maximo uma ativa por questionario']
+  periodo_reaplicacao_dias smallint [not null]
+  criado_em timestamptz [not null]
+
+  indexes {
+    (questionario_id, versao) [unique]
+  }
+}
+
+Table pergunta {
+  id integer [pk, increment]
+  versao_id integer [not null]
+  texto text [not null]
+  tipo pergunta_tipo [not null]
+  ordem smallint [not null]
+  obrigatoria boolean [not null]
+
+  indexes {
+    (versao_id, ordem) [unique]
+  }
+
+  Note: 'tipo=aberta nao possui opcao_pergunta'
+}
+
+Table opcao_pergunta {
+  id integer [pk, increment]
+  pergunta_id integer [not null]
+  texto varchar(200) [not null]
+  valor_numerico smallint [not null, note: 'Peso da pontuacao automatica']
+  ordem smallint [not null]
+
+  indexes {
+    (pergunta_id, ordem) [unique]
+  }
+}
+
+Table faixa_interpretacao {
+  id integer [pk, increment]
+  versao_id integer [not null]
+  minimo smallint [not null]
+  maximo smallint [not null]
+  codigo varchar(40) [not null, note: 'Chave: leve, moderado']
+  rotulo varchar(80) [not null, note: 'Texto na tela: Leve']
+  texto_orientativo text [not null, note: 'Explicacao + aviso de nao diagnostico']
+}
+
+Table avaliacao {
+  id integer [pk, increment]
+  usuario_id integer [not null]
+  versao_id integer [not null]
+  criado_em timestamptz [not null]
+
+  Note: 'Agrupa as respostas de um envio. Nao e diagnostico.'
+}
+
+Table resposta {
+  id integer [pk, increment]
+  avaliacao_id integer [not null]
+  pergunta_id integer [not null]
+  opcao_id integer [note: 'Nulo se pergunta aberta']
+  texto text [note: 'Nulo se pergunta fechada']
+
+  indexes {
+    (avaliacao_id, pergunta_id) [unique]
+  }
+}
+
+Table resultado {
+  id integer [pk, increment]
+  avaliacao_id integer [not null, unique]
+  pontuacao smallint [not null, note: 'Soma automatica dos pesos']
+  faixa_id integer [not null]
+  calculado_em timestamptz [not null]
+
+  Note: 'Score automatico. Nao e diagnostico.'
+}
+
+// 1:N
+Ref: usuario.id < sessao.usuario_id
+Ref: usuario.id < checkin_diario.usuario_id
+Ref: usuario.id < avaliacao.usuario_id
+Ref: questionario.id < questionario_versao.questionario_id
+Ref: questionario_versao.id < pergunta.versao_id
+Ref: questionario_versao.id < faixa_interpretacao.versao_id
+Ref: questionario_versao.id < avaliacao.versao_id
+Ref: pergunta.id < opcao_pergunta.pergunta_id
+Ref: pergunta.id < resposta.pergunta_id
+Ref: avaliacao.id < resposta.avaliacao_id
+Ref: opcao_pergunta.id < resposta.opcao_id
+Ref: faixa_interpretacao.id < resultado.faixa_id
+
+// 1:1
+Ref: avaliacao.id - resultado.avaliacao_id

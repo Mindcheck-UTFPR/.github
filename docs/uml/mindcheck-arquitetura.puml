@@ -1,0 +1,70 @@
+@startuml Mindcheck_Arquitetura
+title Mindcheck — Arquitetura do MVP
+
+skinparam shadowing false
+skinparam linetype ortho
+skinparam componentStyle rectangle
+
+actor "Universitário" as User
+
+node "Android ou navegador" {
+  component "React + TypeScript + Vite\n(mobile-first)" as Frontend
+  component "Capacitor / WebView" as Capacitor
+}
+
+cloud "Oracle Cloud + Docker Compose" {
+  node "Nginx" as Nginx {
+    component "HTTPS / estáticos" as Static
+    component "Proxy /api" as Proxy
+  }
+
+  node "API" {
+    component "Node.js + Express" as Api
+    package "Módulos" {
+      [identity]
+      [mood]
+      [questionnaires]
+      [assessments]
+      [scoring]
+      [dashboard]
+    }
+  }
+
+  database "PostgreSQL 16" as DB
+}
+
+User --> Capacitor
+User --> Frontend
+Capacitor --> Frontend
+Frontend -down-> Nginx : HTTPS
+Static --> Frontend
+Proxy --> Api
+Api --> [identity]
+Api --> [mood]
+Api --> [questionnaires]
+Api --> [assessments]
+Api --> [scoring]
+Api --> [dashboard]
+[identity] --> DB
+[mood] --> DB
+[questionnaires] --> DB
+[assessments] --> DB
+[scoring] --> DB
+[dashboard] --> DB
+
+note right of [scoring]
+  Soma automática (sem IA).
+  Não é diagnóstico.
+end note
+
+note right of [mood]
+  Check-in diário estruturado.
+  Não usa pergunta/resposta.
+end note
+
+note right of [questionnaires]
+  Catálogo: questionario
+  + questionario_versao ativa.
+end note
+
+@enduml
