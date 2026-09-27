@@ -19,35 +19,65 @@ Branches devem ser removidas após o merge. Uma branch não deve misturar issues
 
 ## Commits
 
-Adotamos Conventional Commits com a chave do Jira:
+Cada commit leva um shortcode de emoji, o tipo do Conventional Commit, o escopo, a descrição e a issue:
 
 ```text
-<tipo>(<escopo>): <descrição> [MIND-123]
+:<emoji>: <tipo>(<escopo>): <descrição> [MIND-123]
 ```
 
-Tipos aceitos:
-
-- `feat`: nova funcionalidade;
-- `fix`: correção de defeito;
-- `test`: testes;
-- `docs`: documentação;
-- `refactor`: refatoração sem mudança funcional;
-- `style`: formatação sem alteração de comportamento;
-- `chore`: manutenção, dependências ou configuração;
-- `ci`: automação e pipeline;
-- `perf`: melhoria de desempenho.
-
-Exemplos:
+Escreva o shortcode (`:books:`, `:sparkles:`). O GitHub mostra o emoji. A descrição é uma frase curta em português, com verbo no infinitivo, sem ponto final.
 
 ```text
-feat(auth): adicionar autenticação JWT [MIND-17]
-test(auth): cobrir renovação de sessão [MIND-19]
-docs(org): documentar fluxo de branches [MIND-2]
+:sparkles: feat(auth): adicionar página de login [MIND-18]
+:books: docs(readme): atualizar instruções de execução [MIND-2]
+:bug: fix(questionario): interromper loop na validação [MIND-24]
+:test_tube: test(auth): cobrir renovação de sessão [MIND-19]
 ```
+
+### Catálogo
+
+| Comando Git | Resultado no GitHub |
+| --- | --- |
+| `git commit -m ":tada: Commit inicial"` | 🎉 Commit inicial |
+| `git commit -m ":books: docs: Atualização do README"` | 📚 docs: Atualização do README |
+| `git commit -m ":bug: fix: Loop infinito na linha 50"` | 🐛 fix: Loop infinito na linha 50 |
+| `git commit -m ":sparkles: feat: Página de login"` | ✨ feat: Página de login |
+| `git commit -m ":bricks: ci: Modificação no Dockerfile"` | 🧱 ci: Modificação no Dockerfile |
+| `git commit -m ":recycle: refactor: Passando para arrow functions"` | ♻️ refactor: Passando para arrow functions |
+| `git commit -m ":zap: perf: Melhoria no tempo de resposta"` | ⚡ perf: Melhoria no tempo de resposta |
+| `git commit -m ":boom: fix: Revertendo mudanças ineficientes"` | 💥 fix: Revertendo mudanças ineficientes |
+| `git commit -m ":lipstick: feat: Estilização CSS do formulário"` | 💄 feat: Estilização CSS do formulário |
+| `git commit -m ":test_tube: test: Criando novo teste"` | 🧪 test: Criando novo teste |
+| `git commit -m ":bulb: docs: Comentários sobre a função LoremIpsum( )"` | 💡 docs: Comentários sobre a função LoremIpsum( ) |
+| `git commit -m ":card_file_box: raw: RAW Data do ano aaaa"` | 🗃️ raw: RAW Data do ano aaaa |
+| `git commit -m ":broom: cleanup: Eliminando blocos de código comentados e variáveis não utilizadas na função de validação de formulário"` | 🧹 cleanup: Eliminando blocos de código comentados e variáveis não utilizadas na função de validação de formulário |
+| `git commit -m ":wastebasket: remove: Removendo arquivos não utilizados do projeto para manter a organização e atualização contínua"` | 🗑️ remove: Removendo arquivos não utilizados do projeto para manter a organização e atualização contínua |
+
+No Mindcheck a linha completa inclui escopo e `[MIND-123]`. O catálogo acima mostra só o emoji e o tipo.
+
+| Shortcode | Tipo | Uso |
+| --- | --- | --- |
+| `:tada:` | — | commit inicial do repositório |
+| `:sparkles:` | `feat` | nova funcionalidade |
+| `:lipstick:` | `feat` | estilização de interface |
+| `:bug:` | `fix` | correção de defeito |
+| `:boom:` | `fix` | reverter mudança ineficiente |
+| `:books:` | `docs` | documentação |
+| `:bulb:` | `docs` | comentário que explica uma função |
+| `:recycle:` | `refactor` | refatoração sem mudança funcional |
+| `:art:` | `style` | formatação sem mudança de comportamento |
+| `:zap:` | `perf` | desempenho |
+| `:test_tube:` | `test` | testes |
+| `:bricks:` | `ci` | pipeline, Docker e automação |
+| `:wrench:` | `chore` | manutenção, dependência ou configuração |
+| `:card_file_box:` | `raw` | dado bruto versionado |
+| `:broom:` | `cleanup` | código comentado ou variável sem uso |
+| `:wastebasket:` | `remove` | arquivo que saiu do projeto |
 
 ## Pull Requests
 
 - O título deve seguir o formato `MIND-123: descrição objetiva`.
+- O corpo segue [PULL-REQUESTS.md](PULL-REQUESTS.md) e o template em `.github/pull_request_template.md`.
 - O PR deve ter `develop` como destino, exceto releases e hotfixes.
 - O autor não deve aprovar o próprio PR.
 - Toda conversa de revisão deve ser resolvida antes do merge.

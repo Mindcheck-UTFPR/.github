@@ -1,0 +1,28 @@
+---
+description: Engenharia com IA — especificação antes do código
+alwaysApply: true
+---
+
+# IA como engenharia
+
+A IA multiplica a especificação. Issue vaga vira código errado, rápido. Todo pedido de código nasce da issue `MIND-*` e de `.github/docs/PRODUCT.md`.
+
+## Antes de gerar código
+
+1. Problema e público, sem vender tecnologia.
+2. Escopo e não-escopo desta issue.
+3. Aceite testável (dado / quando / então).
+4. Repositório e módulo certos.
+5. Restrições da stack e da LGPD.
+
+Prompt completo: contexto, tarefa de agora, restrições, formato de saída, critérios de aceite.
+
+## Regras
+
+- Uma issue por vez. Não peça o app inteiro.
+- Não aceite a primeira resposta sem ler e testar.
+- Não cole segredo, senha ou `.env` no chat.
+- Não pergunte “qual é o melhor?”. Compare 2–3 alternativas neste contexto; o time decide.
+- Decisão cara de desfazer vira ADR: contexto, decisão, alternativas, consequências. “A IA sugeriu” não é ADR.
+- Telas existem por requisito. Cubra vazio, loading, erro, cache, conteúdo extremo e permissão negada.
+- O “pronto” é o aceite da issue, não o caso feliz da ferramenta.

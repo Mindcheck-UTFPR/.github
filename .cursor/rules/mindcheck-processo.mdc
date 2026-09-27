@@ -1,0 +1,26 @@
+---
+description: Processo de desenvolvimento Mindcheck (GCS, Jira e GitHub)
+alwaysApply: true
+---
+
+# Processo Mindcheck
+
+Há três repositórios irmãos. Código de tela vai em `frontend`. API, Prisma e pontuação vão em `backend`. Processo, produto, sprints e ADRs vão no repositório `.github` da organização. A pasta `.github` de frontend/backend é só GitHub Actions.
+
+Jira `MIND` é a fonte de escopo. GitHub é a fonte de código. Toda branch, commit e PR referencia `MIND-*`.
+
+## Ordem
+
+Problema com DoR → critérios de aceite e não-escopo → ADR se a decisão for cara → uma issue → testes/evidências → PR para `develop` → revisão + CI → squash merge → DoD no Jira.
+
+Não comece pelo código. Não misture issues. Não commite em `main` ou `develop`.
+
+## Git
+
+- Branch: `feature|fix|hotfix|chore/MIND-123-resumo` a partir de `develop` (hotfix a partir de `main`).
+- Commit: `:emoji: tipo(escopo): descrição [MIND-123]`. Catálogo em `docs/CONVENTIONS.md`.
+- PR: título `MIND-123: descrição`; corpo em `docs/PULL-REQUESTS.md`; destino `develop`; squash merge.
+- Rebase só na branch local, antes de compartilhar.
+- Release em `main` com tag `vX.Y.Z`.
+
+Nunca versionar `.env`, token, chave SSH, IP privado ou dado pessoal. Não desative lint, teste ou pipeline sem justificar no PR.

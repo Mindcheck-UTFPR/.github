@@ -20,7 +20,7 @@ O **Mindcheck** é um projeto acadêmico voltado a jovens adultos, principalment
 - Toda mudança deve estar associada a uma issue e passar por Pull Request.
 - Não são permitidos commits diretos em `main` ou `develop`.
 
-Consulte o [guia de contribuição](../CONTRIBUTING.md), as [convenções técnicas](../docs/CONVENTIONS.md) e a [governança do projeto](../docs/GOVERNANCE.md) antes de iniciar uma tarefa.
+Consulte o [processo de desenvolvimento](../docs/DEVELOPMENT.md), o [guia de contribuição](../CONTRIBUTING.md), as [convenções técnicas](../docs/CONVENTIONS.md) e a [governança do projeto](../docs/GOVERNANCE.md) antes de iniciar uma tarefa. No Cursor, siga também [AI-CURSOR.md](../docs/AI-CURSOR.md).
 
 ## Stack do MVP
 

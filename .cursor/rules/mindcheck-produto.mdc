@@ -1,0 +1,29 @@
+---
+description: Restrições de produto e stack do Mindcheck
+alwaysApply: true
+---
+
+# Produto Mindcheck
+
+Plataforma de autoconhecimento e triagem de bem-estar para universitários. **Não faz diagnóstico.** Scores são orientativos. Sem afirmar causa no dashboard.
+
+## MVP
+
+Entra: conta e termos, check-in diário curto, questionário versionado, pontuação no backend, dashboard, privacidade/LGPD.
+
+Fora: terapia no app, marketplace, pagamentos, IA clínica, wearables, e-mail SMTP, gamificação social.
+
+Check-in de humor **não** é questionário. Pontuação **não** roda no frontend.
+
+## Stack
+
+- Frontend: React + TypeScript + Vite, mobile-first, Capacitor/WebView. Consome a API. Mínimo de dado no dispositivo.
+- Backend: Node.js + Express + Prisma + PostgreSQL. Módulos: `identity`, `mood`, `questionnaires`, `assessments`, `scoring`, `dashboard`.
+- Produção: Docker Compose, Nginx HTTPS, Oracle Cloud. API sem porta pública direta.
+
+## Qualidade
+
+- Cada usuário acessa só os próprios registros.
+- Questionários publicados são versionados; pontuação determinística e testada com exemplos.
+- Logs sem humor, respostas, senha ou token.
+- Interface: celular primeiro; toque e texto legíveis; ação principal ao alcance de uma mão.
