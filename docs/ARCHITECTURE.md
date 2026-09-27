@@ -23,6 +23,7 @@ Os serviços de produção serão executados com Docker Compose em uma VM gratui
 ## Decisões principais
 
 - React + TypeScript + Vite para a interface.
+- Design atômico na UI (`atoms`, `molecules`, `organisms`, `templates`). Comportamento acessível com Radix UI; o visual é do Mindcheck. Detalhe em `frontend/docs/ARCHITECTURE.md`.
 - Capacitor para reaproveitar a interface em um WebView Android.
 - Node.js + TypeScript + Express para a API.
 - PostgreSQL para dados relacionais e históricos.
