@@ -5,6 +5,7 @@ Este repositório centraliza o perfil e os padrões compartilhados da organizaç
 - `profile/README.md`: página pública da organização no GitHub.
 - `CONTRIBUTING.md`: guia padrão de contribuição.
 - `docs/DEVELOPMENT.md`: processo de desenvolvimento (GCS, Git/GitHub e ciclo de uma issue).
+- `docs/ROTEIRO-PROCESSO.md`: roteiro curto do processo, do clone ao merge.
 - `docs/AI-CURSOR.md`: como a equipe e a IA do Cursor devem implementar a partir da especificação.
 - `docs/CONVENTIONS.md`: branches, commits, PRs, proteção e Definition of Done.
 - `docs/PULL-REQUESTS.md`: como escrever a documentação da Pull Request.
