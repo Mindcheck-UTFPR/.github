@@ -12,7 +12,7 @@ A IA multiplica a especificação. Issue vaga vira código errado, rápido. Todo
 1. Problema e público, sem vender tecnologia.
 2. Escopo e não-escopo desta issue.
 3. Aceite testável (dado / quando / então).
-4. Repositório e módulo certos.
+4. Repositório e camada certos (`routes`, `controllers`, `services`).
 5. Restrições da stack e da LGPD.
 
 Prompt completo: contexto, tarefa de agora, restrições, formato de saída, critérios de aceite.

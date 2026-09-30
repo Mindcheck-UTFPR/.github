@@ -43,7 +43,7 @@ Antes de gerar código, a IA deve restabelecer:
 | Contexto | Onde isso vive? | backend Express + Prisma; issue `MIND-25`; pontuação no servidor |
 | Tarefa | O que fazer agora? | calcular faixa da versão publicada do questionário |
 | Restrições | O que não pode? | sem diagnóstico; sem log de respostas; sem pontuar no frontend |
-| Formato | Como devolver? | arquivos no módulo `scoring`, com teste de exemplo |
+| Formato | Como devolver? | arquivos em `services` de pontuação, com teste de exemplo |
 | Aceite | Quando está pronto? | soma determinística; faixa da versão; critério da issue marcado |
 
 Não peça o app inteiro. Não aceite a primeira resposta sem ler nem testar. Não cole senha, token ou `.env` no chat. Não pergunte “qual é o melhor?” para arquitetura: peça 2–3 alternativas com consequências neste contexto.

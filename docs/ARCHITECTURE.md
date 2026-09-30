@@ -27,7 +27,7 @@ Os serviços de produção serão executados com Docker Compose em uma VM gratui
 - Capacitor para reaproveitar a interface em um WebView Android.
 - Node.js + TypeScript + Express para a API.
 - PostgreSQL para dados relacionais e históricos.
-- Monólito modular no MVP.
+- API única no MVP, organizada por camadas (`routes`, `controllers`, `services`).
 - Docker Compose, Nginx e Oracle Cloud Free Tier para a demonstração.
 
 ## Cuidados
